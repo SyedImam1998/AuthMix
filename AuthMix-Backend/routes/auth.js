@@ -1,13 +1,16 @@
-import express from 'express';
-import { loginController } from '../controller/loginController.js';
-import bodyParser from "body-parser";
+const express = require("express");
+
+const { loginController, signUpController, isLoggedIn } = require("../controller/adminController.js");
+const bodyParser = require("body-parser");
 
 
+const router = express.Router();
+router.use(bodyParser.urlencoded({ extended: false }));
 
-const router= express.Router();
-router.use(bodyParser.urlencoded({extended:false}))
+router.post("/login", loginController);
 
+router.post("/signup", signUpController);
 
-router.post('/login',loginController)
+router.get("/isLoggedIn", isLoggedIn);
 
-export default router;
+module.exports = router;

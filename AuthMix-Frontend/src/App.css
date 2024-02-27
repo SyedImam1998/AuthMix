@@ -11,3 +11,11 @@
   border: 1px solid rgba(0, 0, 0, 0.23);
   padding: 5%;
 }
+
+.parent{
+  width: 100%;
+  height: max-content;
+  /* border: 1px solid black; */
+  display: flex;
+  gap:10px
+}

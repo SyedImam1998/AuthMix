@@ -1,13 +1,14 @@
-import express from "express";
-import cookieParser from "cookie-parser";
+const express = require("express");
 
-const router=express.Router();
-router.use(cookieParser());;
+const cookieParser = require("cookie-parser");
 
-router.get('/allData',(req,res,next)=>{
-    const myCookie = req.cookies.isLoggedIn;
-    console.log('Value of myCookie:', myCookie);
-    res.json("Okay Okay");
-})
+const router = express.Router();
+router.use(cookieParser());
 
-export default router
+router.get("/allData", (req, res, next) => {
+  const myCookie = req.cookies.isLoggedIn;
+  console.log("Value of myCookie:", myCookie);
+  res.json("Okay Okay");
+});
+
+module.exports = router;
