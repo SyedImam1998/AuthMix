@@ -5,14 +5,15 @@ exports.loginController = (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body, email, password);
 
-    User.findOne({ email: email })
+  User.findOne({ email: email })
     .then(async (value) => {
       console.log("value", value.password);
-      const passwordMatch = await bcrypt.compare(password,value.password);
+      const passwordMatch = await bcrypt.compare(password, value.password);
       console.log("passwordMatch", passwordMatch);
-      if(!passwordMatch) throw new Error("Went wrong")
-      res.cookie("isLoggedIn", "true", { path: "/" });
-      res.status(200).json("OK")
+      if (!passwordMatch) throw new Error("Went wrong");
+      // res.cookie("isLoggedIn", "true", { path: "/" });
+      req.session.isLoggedIn = true;
+      res.status(200).json("OK");
     })
     .catch((e) => {
       res.json("INCORRECT");
@@ -36,9 +37,9 @@ exports.signUpController = async (req, res, next) => {
     });
 };
 
-exports.isLoggedIn=async(req,res,next)=>{
+exports.isLoggedIn = async (req, res, next) => {
   const myCookie = req.cookies.isLoggedIn;
   console.log("Value of myCookie:", JSON.parse(myCookie));
 
-    res.json(JSON.parse(myCookie));
-}
+  res.json(JSON.parse(myCookie));
+};
