@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { loginController, signUpController, isLoggedIn } = require("../controller/adminController.js");
+const { loginController, signUpController, isLoggedIn, logout } = require("../controller/adminController.js");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
@@ -14,5 +14,7 @@ router.post("/login", loginController);
 router.post("/signup", signUpController);
 
 router.get("/isLoggedIn", isLoggedIn);
+
+router.get('/logout',logout)
 
 module.exports = router;

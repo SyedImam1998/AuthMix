@@ -1,6 +1,7 @@
 const User = require("../model/user.js");
 const bcrypt = require("bcrypt");
 
+
 exports.loginController = (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body, email, password);
@@ -12,7 +13,7 @@ exports.loginController = (req, res, next) => {
       console.log("passwordMatch", passwordMatch);
       if (!passwordMatch) throw new Error("Went wrong");
       // res.cookie("isLoggedIn", "true", { path: "/" });
-      req.session.isLoggedIn = true;
+      req.session.isLoggedIn = true; /// upon adding this only cookie will be sent to client and data will be added to the MongoDB
       res.status(200).json("OK");
     })
     .catch((e) => {
@@ -43,3 +44,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
   res.json(JSON.parse(myCookie));
 };
+
+exports.logout=async(req,res,next)=>{
+req.session.destroy();
+}
