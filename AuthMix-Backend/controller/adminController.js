@@ -12,10 +12,10 @@ exports.loginController = (req, res, next) => {
       console.log("passwordMatch", passwordMatch);
       if(!passwordMatch) throw new Error("Went wrong")
       res.cookie("isLoggedIn", "true", { path: "/" });
-      res.json("Awesome");
+      res.status(200).json("OK")
     })
     .catch((e) => {
-      res.json("Went wrong !!!");
+      res.json("INCORRECT");
     });
 };
 
@@ -37,5 +37,8 @@ exports.signUpController = async (req, res, next) => {
 };
 
 exports.isLoggedIn=async(req,res,next)=>{
-    res.json(true);
+  const myCookie = req.cookies.isLoggedIn;
+  console.log("Value of myCookie:", JSON.parse(myCookie));
+
+    res.json(JSON.parse(myCookie));
 }

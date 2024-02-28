@@ -1,11 +1,11 @@
 import axios from "../../axios-config";
 
-export const auth = async () => {
+export const loggedInCheckApi = async () => {
   try {
-    const isLoggedIn = await axios.get("/checkIsLoggedIn");
-    if (!isLoggedIn) throw new Error("token expired");
-    return isLoggedIn;
+    const isLoggedIn = await axios.get("/user/isLoggedIn");
+    console.log(isLoggedIn.data);
+    return isLoggedIn.data === "OK" ? true : false;
   } catch (error) {
-    return error;
+    return false;
   }
 };

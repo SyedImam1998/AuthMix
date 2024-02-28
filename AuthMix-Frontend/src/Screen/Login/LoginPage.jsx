@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './LoginPage.css';
 import axios from '../../../axios-config';
+import { useNavigate } from 'react-router-dom';
+import { Context } from '../../Context';
 
 const LoginPage = () => {
     const [inputs, setInputs] = React.useState({});
+    const navigate=useNavigate()
+    const {isLoggedIn,setIsLoggedIn }= useContext(Context);
+    
 
     
     const captureInputs = (name, value) => {
@@ -16,9 +21,11 @@ const LoginPage = () => {
       const sendLoginCreds = async (e) => {
         e.preventDefault();
         console.log(inputs);
-        await axios.post("/user/login", inputs).then((data) => {
-          console.log(data);
-        });
+       const data= await axios.post("/user/login", inputs);
+       if(data.data==="OK"){
+        setIsLoggedIn(true);
+        return navigate('/');
+       }
       };
     
       const getData = async () => {
