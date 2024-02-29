@@ -1,7 +1,6 @@
 const User = require("../model/user.js");
 const bcrypt = require("bcrypt");
 
-
 exports.loginController = (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body, email, password);
@@ -39,12 +38,14 @@ exports.signUpController = async (req, res, next) => {
 };
 
 exports.isLoggedIn = async (req, res, next) => {
-  const myCookie = req.cookies.isLoggedIn;
-  console.log("Value of myCookie:", JSON.parse(myCookie));
-
-  res.json(JSON.parse(myCookie));
+  const myCookie = req.session.isLoggedIn;
+  if (!myCookie) {
+    res.json(false);
+  } else {
+    res.json(JSON.parse(myCookie));
+  }
 };
 
-exports.logout=async(req,res,next)=>{
-req.session.destroy();
-}
+exports.logout = async (req, res, next) => {
+  req.session.destroy();
+};

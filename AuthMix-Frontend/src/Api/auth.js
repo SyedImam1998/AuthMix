@@ -4,7 +4,7 @@ export const loggedInCheckApi = async () => {
   try {
     const isLoggedIn = await axios.get("/user/isLoggedIn");
     console.log(isLoggedIn.data);
-    return isLoggedIn.data === "OK" ? true : false;
+    return isLoggedIn.data;
   } catch (error) {
     return false;
   }

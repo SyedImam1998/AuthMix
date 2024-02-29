@@ -22,7 +22,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: store,
-    name:"AuthMix-cookie"
+    name:"AuthMix-cookie",
+    cookie:{httpOnly:false}
   })
 );
 
