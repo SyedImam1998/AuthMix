@@ -22,8 +22,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: store,
-    name:"AuthMix-cookie",
-    cookie:{httpOnly:false}
+    name: "AuthMix-cookie",
+    cookie: { httpOnly: false, maxAge: 365 * 24 * 60 * 60 * 1000 },
   })
 );
 
