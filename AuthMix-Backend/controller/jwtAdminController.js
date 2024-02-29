@@ -2,6 +2,15 @@ const jwtUser = require("../model/jwtUser");
 const ApiResponse = require("../utils/ApiResponse.js");
 const { ApiError, encryptAndGive } = require("../utils/utility.js");
 
+const generateAccessTokenAndRefreshToken=async(userId)=>{
+    try {
+        const user=await jwtUser.findById(userId);
+        const accessToken=user.generateAccessToken()
+    } catch (error) {
+        
+    }
+
+}
 exports.jwtLoginController = async (req, res, next) => {
   const { email, password } = req.body;
   try {
