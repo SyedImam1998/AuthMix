@@ -47,5 +47,9 @@ exports.isLoggedIn = async (req, res, next) => {
 };
 
 exports.logout = async (req, res, next) => {
-  req.session.destroy();
+  req.session.destroy((err)=>{
+    console.log('err', err);
+    res.clearCookie('AuthMix-cookie'); // clear the cookie
+    res.json("OK");
+  });
 };
