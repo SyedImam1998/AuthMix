@@ -6,6 +6,10 @@ const cookieParser = require("cookie-parser");
 
 
 const router = express.Router();
+router.use((req,res,next)=>{
+    console.log("from Login Route");
+    next();
+})
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
 

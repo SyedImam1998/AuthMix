@@ -6,6 +6,7 @@ const sessionStoreMongoDb = require("connect-mongodb-session")(session);
 
 const dataRouter = require("./routes/dataRoutes.js");
 const LoginRoute = require("./routes/auth.js");
+const JwtLoginRoute=require('./routes/jwtAuth.js');
 const app = express();
 const DBURI =
   "mongodb+srv://syedimam1998:AKd3Ma1ZyTsHxoEd@cluster0.ibsgazk.mongodb.net/Users?retryWrites=true&w=majority&appName=Cluster0";
@@ -31,9 +32,15 @@ mongoose.connect(DBURI).then(() => {
   console.log("Connected to MongoDB Atlas");
 });
 
-app.use("/user", LoginRoute);
+// app.use("/user", [LoginRoute,JwtLoginRoute]); // middleware in both the routes will be triggered
+
+app.use('/user',LoginRoute)
+
+app.use('/jwtUser',JwtLoginRoute);
 
 app.use("/data", dataRouter);
+
+
 
 app.listen(4000, () => {
   console.log("server running");
