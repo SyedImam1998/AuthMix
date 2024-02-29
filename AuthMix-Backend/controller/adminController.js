@@ -13,7 +13,7 @@ exports.loginController = (req, res, next) => {
       console.log("passwordMatch", passwordMatch);
       if (!passwordMatch) throw new Error("Went wrong");
       // res.cookie("isLoggedIn", "true", { path: "/" });
-      req.session.isLoggedIn = true; /// upon adding this only cookie will be sent to client and data will be added to the MongoDB
+      req.session.isLoggedIn = true; /// up on adding this only cookie will be sent to client and data will be added to the MongoDB
       res.status(200).json("OK");
     })
     .catch((e) => {
