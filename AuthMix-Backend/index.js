@@ -7,6 +7,7 @@ const sessionStoreMongoDb = require("connect-mongodb-session")(session);
 const dataRouter = require("./routes/dataRoutes.js");
 const LoginRoute = require("./routes/auth.js");
 const JwtLoginRoute=require('./routes/jwtAuth.js');
+const cookieParser = require("cookie-parser");
 const app = express();
 const DBURI =
   "mongodb+srv://syedimam1998:AKd3Ma1ZyTsHxoEd@cluster0.ibsgazk.mongodb.net/Users?retryWrites=true&w=majority&appName=Cluster0";
@@ -27,6 +28,8 @@ app.use(
     cookie: { httpOnly: false, maxAge: 365 * 24 * 60 * 60 * 1000 },
   })
 );
+
+// app.use(cookieParser());
 
 mongoose.connect(DBURI).then(() => {
   console.log("Connected to MongoDB Atlas");

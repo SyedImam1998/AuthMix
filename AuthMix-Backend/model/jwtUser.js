@@ -13,6 +13,9 @@ const jwtUser = new Schema({
     type: String,
     required:true,
   },
+  refreshToken:{
+    type:String,
+  }
 });
 
 jwtUser.methods.isPasswordCorrect=async function(password){

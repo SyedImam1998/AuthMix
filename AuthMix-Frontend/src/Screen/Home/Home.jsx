@@ -46,10 +46,35 @@ const Home = () => {
         }
       });
   };
+  const jwtLogout = async () => {
+    await axios
+      // .get("http://localhost:4000/data/allData", { withCredentials: true })
+      .post("/jwtUser/jwtLogout")
+      .then( (res) => {
+        console.log(res.data);
+        if(res.data==="OK"){
+          navigate('/login')
+          
+        }
+      });
+  };
+
+  const updateValueOnServerJwt=async()=>{
+    try {
+      const data=await axios.post('/data/updateDataUsingJWT',{email:"syedimam1998@gmail.com",valueFromClient:"Imam Value from Client"});
+      console.log('data.data', data.data)
+    } catch (error) {
+      console.log('error', error)
+    }
+
+  }
   return (
     <div>
       <button onClick={getData}>Another Api Call</button>
       <button onClick={logout}>Logout</button>
+      <button onClick={jwtLogout}>Jwt Logout</button>
+      <br/>
+      <button onClick={updateValueOnServerJwt}>UpdateValueOnServer</button>
 
     </div>
   );

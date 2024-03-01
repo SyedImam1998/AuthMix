@@ -1,50 +1,70 @@
-import React, { useContext } from 'react'
-import './LoginPage.css';
-import axios from '../../../axios-config';
-import { useNavigate } from 'react-router-dom';
-import { Context } from '../../Context';
+import React, { useContext } from "react";
+import "./LoginPage.css";
+import axios from "../../../axios-config";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../../Context";
+import { checkValidJwtAccessToken } from "../../../utility";
 
 const LoginPage = () => {
-    const [inputs, setInputs] = React.useState({});
-    const navigate=useNavigate()
-    const {isLoggedIn,setIsLoggedIn }= useContext(Context);
-    
+  const [inputs, setInputs] = React.useState({});
+  const navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedIn } = useContext(Context);
 
-    
-    const captureInputs = (name, value) => {
-        setInputs({
-          ...inputs,
-          [name]: value,
-        });
-      };
-    
-      const sendLoginCreds = async (e) => {
-        e.preventDefault();
-        console.log(inputs);
-       const data= await axios.post("/user/login", inputs);
-       if(data.data==="OK"){
-        setIsLoggedIn(true);
-        return navigate('/');
-       }
-      };
-    
-      const getData = async () => {
-        await axios
-          // .get("http://localhost:4000/data/allData", { withCredentials: true })
-          .get("/data/allData")
-          .then((res) => {
-            console.log(res);
-          });
-      };
-    
-      const signUpUser = async (e) => {
-        e.preventDefault();
-        try {
-          await axios.post("/user/signup",inputs);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+  const captureInputs = (name, value) => {
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  const sendLoginCreds = async (e) => {
+    e.preventDefault();
+    console.log(inputs);
+    const data = await axios.post("/user/login", inputs);
+    if (data.data === "OK") {
+      setIsLoggedIn(true);
+      return navigate("/");
+    }
+  };
+
+  const getData = async () => {
+    await axios
+      // .get("http://localhost:4000/data/allData", { withCredentials: true })
+      .get("/data/allData")
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  const signUpUser = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/user/signup", inputs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const signUpJwtUser = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/jwtUser/jwtSignUp", inputs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  
+
+  const sendJwtLoginCreds = async (e) => {
+    e.preventDefault();
+    console.log(inputs);
+    const data = await axios.post("/jwtUser/jwtLogin", inputs);
+    console.log("data.data", data.data);
+    const accessTokenCheck = await checkValidJwtAccessToken();
+    if (!accessTokenCheck) return alert("Invalid Token Issued");
+    return navigate("/");
+  };
+
   return (
     <div className="mainApp">
       <div className="parent">
@@ -101,7 +121,7 @@ const LoginPage = () => {
       <div className="parent">
         <div className="jwt-based">
           <h4> JWT Login !!!</h4>
-          <form onSubmit={sendLoginCreds}>
+          <form onSubmit={sendJwtLoginCreds}>
             <input
               type="text"
               placeholder="email"
@@ -124,7 +144,7 @@ const LoginPage = () => {
         </div>
         <div className="jwt-based">
           <h4> JWT Signup !!!</h4>
-          <form onSubmit={sendLoginCreds}>
+          <form onSubmit={signUpJwtUser}>
             <input
               type="text"
               placeholder="email"
@@ -146,9 +166,12 @@ const LoginPage = () => {
           </form>
         </div>
       </div>
-      <button onClick={getData}>Another Api Call</button>
+      <button onClick={getData}>Session Another Api Call</button>
+      <button onClick={checkValidJwtAccessToken}>
+        Check Valid Jwt Access Token
+      </button>
     </div>
-  )
-}
+  );
+};
 
 export default LoginPage;

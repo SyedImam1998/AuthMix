@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { checkIsLoggedIn } from "../../utility";
+import { checkIsLoggedIn, checkValidJwtAccessToken } from "../../utility";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -7,9 +7,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const loggedIn = await checkIsLoggedIn();
-      console.info(loggedIn)
-      setIsAuthenticated(loggedIn);
+      
+      // const loggedIn = await checkIsLoggedIn(); // For session-cokkie check
+      const jwtLoggedIn= await checkValidJwtAccessToken();
+      console.info(jwtLoggedIn)
+      // console.info(loggedIn)
+      // setIsAuthenticated(loggedIn);
+      setIsAuthenticated(jwtLoggedIn);
     };
 
     fetchData();
