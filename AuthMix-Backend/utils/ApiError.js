@@ -1,14 +1,14 @@
 class ApiError extends Error {
-  constructor(statusCode, message) {
-    super();
+  constructor(statusCode, message,stack="") {
+    super(message); // pasing this here you donot need to do   this.message = message;
     this.statusCode = statusCode;
-    this.message = message;
-  }
-  returnJsonString() {
-    return JSON.stringify({
-      statusCode: this.statusCode,
-      message: this.message,
-    });
+    // this.message = message;
+
+    if (stack) {
+      this.stack = stack;
+    } else {
+      Error.captureStackTrace(this, this.constructor); //Yes, that's correct. A stack trace is a textual representation of the sequence of function calls (the call stack) that led to the occurrence of an error. It provides information about the execution context at the time the error occurred,
+    }
   }
 }
 
