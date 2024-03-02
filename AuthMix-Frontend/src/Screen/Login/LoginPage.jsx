@@ -30,9 +30,12 @@ const LoginPage = () => {
   const getData = async () => {
     await axios
       // .get("http://localhost:4000/data/allData", { withCredentials: true })
-      .get("/data/allData")
+      .get("/data/allData2")
       .then((res) => {
         console.log(res);
+      }).catch((e)=>{
+        console.log('e', e.response.data.message)
+        console.log('e2', e)
       });
   };
 
